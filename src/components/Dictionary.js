@@ -1,66 +1,83 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-const Dictionary = () => {
-  const [query, setQuery] = useState('');
-  const [result, setResult] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('definition');
+function Dictionary() {
+  const [word, setWord] = useState("");
+  const [definitions, setDefinitions] = useState([]);
+  const [synonyms, setSynonyms] = useState([]);
+  const [examples, setExamples] = useState([]);
+  const [origin, setOrigin] = useState([]);
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  const handleWordChange = (event) => {
+    setWord(event.target.value);
   };
 
-  const searchDictionary = async () => {
-    const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${query}`);
-    setResult(response.data[0]);
-  };
-
-  const renderResult = () => {
-    if (!result) {
-      return null;
-    }
-
-    switch (selectedOption) {
-      case 'definition':
-        return result.meanings[0].definitions.map((definition, index) => (
-          <p key={index}>{definition.definition}</p>
-        ));
-      case 'synonyms':
-        return result.meanings[0].definitions[0].synonyms.map((synonym, index) => (
-          <p key={index}>{synonym}</p>
-        ));
-      case 'examples':
-        return result.meanings[0].definitions[0].examples.map((example, index) => (
-          <p key={index}>{example.text}</p>
-        ));
-      default:
-        return null;
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+      .get(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setDefinitions(response.data[0].meanings[0].definitions);
+        setSynonyms(response.data[0].meanings[0].synonyms);
+        setExamples(response.data[0].meanings[0].examples);
+        setOrigin(response.data[0].origin)
+      })
+      .catch((error) => {
+        console.log(error);
+        setDefinitions([]);
+        setSynonyms([]);
+        setExamples([]);
+        setOrigin([]);
+      });
   };
 
   return (
     <div>
-      <div>
-        <input type="text" value={query} onChange={(event) => setQuery(event.target.value)} />
-        <button onClick={searchDictionary}>Search</button>
-      </div>
-      <div>
+      <form onSubmit={handleSubmit}>
         <label>
-          <input type="radio" value="definition" checked={selectedOption === 'definition'} onChange={handleOptionChange} />
-          Definition
+          Word:
+          <input type="text" value={word} onChange={handleWordChange} />
         </label>
-        <label>
-          <input type="radio" value="synonyms" checked={selectedOption === 'synonyms'} onChange={handleOptionChange} />
-          Synonyms
-        </label>
-        <label>
-          <input type="radio" value="examples" checked={selectedOption === 'examples'} onChange={handleOptionChange} />
-          Examples
-        </label>
-      </div>
-      {renderResult()}
+        <button type="submit">Search</button>
+      </form>
+      {definitions && definitions.length > 0 && (
+        <div>
+          <h2>Definitions:</h2>
+          <ul>
+            {definitions.map((definition, index) => (
+              <li key={index}>{definition.definition}</li>
+            ))}
+          </ul>
+          <br />
+        </div>
+      )}
+      {synonyms && synonyms.length > 0 && (
+        <div>
+          <h2>Synonyms:</h2>
+          <ul>
+            {synonyms.map((synonym, index) => (
+              <li key={index}>{synonym}</li>
+            ))}
+          </ul>
+          <br />
+        </div>
+      )}
+      {examples && examples.length > 0 && (
+        <div>
+          <h2>Examples:</h2>
+          <ul>
+            {examples.map((example, index) => (
+              <li key={index}>{example.text}</li>
+            ))}
+          </ul>
+          <br />
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default Dictionary;
