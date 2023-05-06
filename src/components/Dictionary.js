@@ -6,7 +6,6 @@ function Dictionary() {
   const [definitions, setDefinitions] = useState([]);
   const [synonyms, setSynonyms] = useState([]);
   const [examples, setExamples] = useState([]);
-  const [origin, setOrigin] = useState([]);
 
   const handleWordChange = (event) => {
     setWord(event.target.value);
@@ -23,14 +22,12 @@ function Dictionary() {
         setDefinitions(response.data[0].meanings[0].definitions);
         setSynonyms(response.data[0].meanings[0].synonyms);
         setExamples(response.data[0].meanings[0].examples);
-        setOrigin(response.data[0].origin)
       })
       .catch((error) => {
         console.log(error);
         setDefinitions([]);
         setSynonyms([]);
         setExamples([]);
-        setOrigin([]);
       });
   };
 
