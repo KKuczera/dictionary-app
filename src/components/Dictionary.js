@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from "./Home";
+import Contact from "./Contact";
+
+const router = createBrowserRouter([
+    { path: '/', element: <Home/> },
+    { path: '/contact', element: <Contact/> },
+    { path: '/app', element: <Dictionary/> },
+  ])
 
 function Dictionary() {
   const [word, setWord] = useState("");
@@ -33,6 +42,10 @@ function Dictionary() {
 
   return (
     <div>
+      <RouterProvider router={router}/>
+      
+      <h1>DICTIONARY APP</h1>
+
       <form onSubmit={handleSubmit}>
         <label>
           Word:
@@ -40,6 +53,7 @@ function Dictionary() {
         </label>
         <button type="submit">Search</button>
       </form>
+
       {definitions && definitions.length > 0 && (
         <div>
           <h2>Definitions:</h2>
@@ -51,6 +65,7 @@ function Dictionary() {
           <br />
         </div>
       )}
+
       {synonyms && synonyms.length > 0 && (
         <div>
           <h2>Synonyms:</h2>
@@ -62,6 +77,7 @@ function Dictionary() {
           <br />
         </div>
       )}
+
       {examples && examples.length > 0 && (
         <div>
           <h2>Examples:</h2>

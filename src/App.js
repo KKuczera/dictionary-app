@@ -1,13 +1,17 @@
 import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dictionary from './components/Dictionary';
+import Home from './components/Home';
+import Contact from './components/Contact';
+
+const router = createBrowserRouter([
+  { path: '/', element: <Home/> },
+  { path: '/contact', element: <Contact/> },
+  { path: '/app', element: <Dictionary/> },
+])
 
 const App = () => {
-  return (
-    <div>
-      <h1>Dictionary App</h1>
-      <Dictionary />
-    </div>
-  );
+  return <RouterProvider router={router}/>;
 };
 
 export default App;
