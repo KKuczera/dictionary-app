@@ -1,17 +1,9 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Contact from "./Contact";
-import Dictionary from "./Dictionary";
-
-const router = createBrowserRouter([
-    { path: '/', element: <Home/> },
-    { path: '/contact', element: <Contact/> },
-    { path: '/app', element: <Dictionary/> },
-  ])
+import Menu from './Menu';
 
 function Home(){
     return(
         <div>
-            <RouterProvider router={router}/>
+            <Menu/> <br />
             
             <h2>Hello on our home page! We hope yu'll enjoy this app.</h2>
         </div>

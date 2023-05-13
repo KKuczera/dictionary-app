@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from "./Home";
-import Contact from "./Contact";
-
-const router = createBrowserRouter([
-    { path: '/', element: <Home/> },
-    { path: '/contact', element: <Contact/> },
-    { path: '/app', element: <Dictionary/> },
-  ])
+import Menu from './Menu';
 
 function Dictionary() {
   const [word, setWord] = useState("");
@@ -42,8 +34,8 @@ function Dictionary() {
 
   return (
     <div>
-      <RouterProvider router={router}/>
-      
+      <Menu/> <br />
+
       <h1>DICTIONARY APP</h1>
 
       <form onSubmit={handleSubmit}>
@@ -51,6 +43,7 @@ function Dictionary() {
           Word:
           <input type="text" value={word} onChange={handleWordChange} />
         </label>
+        
         <button type="submit">Search</button>
       </form>
 

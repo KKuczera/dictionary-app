@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dictionary from './components/Dictionary';
 import Home from './components/Home';
 import Contact from './components/Contact';
+import './App.css'
 
 const router = createBrowserRouter([
   { path: '/', element: <Home/> },
