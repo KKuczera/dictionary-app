@@ -7,6 +7,7 @@ function Dictionary() {
   const [definitions, setDefinitions] = useState([]);
   const [synonyms, setSynonyms] = useState([]);
   const [examples, setExamples] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleWordChange = (event) => {
     setWord(event.target.value);
@@ -14,10 +15,10 @@ function Dictionary() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
+
     axios
-      .get(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-      )
+      .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
       .then((response) => {
         console.log(response.data);
         setDefinitions(response.data[0].meanings[0].definitions);
@@ -29,12 +30,15 @@ function Dictionary() {
         setDefinitions([]);
         setSynonyms([]);
         setExamples([]);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <div>
-      <Menu/> <br />
+      <Menu /> <br />
 
       <h1>DICTIONARY APP</h1>
 
@@ -47,7 +51,9 @@ function Dictionary() {
         <button type="submit">Search</button>
       </form>
 
-      {definitions && definitions.length > 0 && (
+      {isLoading && <img src={require('./gifs/loading.gif')} alt="Loading" />}
+
+      {definitions && definitions.length > 0 && !isLoading && (
         <div>
           <h2>Definitions:</h2>
           <ul>
@@ -59,7 +65,7 @@ function Dictionary() {
         </div>
       )}
 
-      {synonyms && synonyms.length > 0 && (
+      {synonyms && synonyms.length > 0 && !isLoading && (
         <div>
           <h2>Synonyms:</h2>
           <ul>
@@ -71,7 +77,7 @@ function Dictionary() {
         </div>
       )}
 
-      {examples && examples.length > 0 && (
+      {examples && examples.length > 0 && !isLoading && (
         <div>
           <h2>Examples:</h2>
           <ul>
@@ -80,6 +86,12 @@ function Dictionary() {
             ))}
           </ul>
           <br />
+        </div>
+      )}
+
+      {!isLoading && definitions.length === 0 && synonyms.length === 0 && examples.length === 0 && (
+        <div>
+          <p>Brak wyników</p>
         </div>
       )}
     </div>
