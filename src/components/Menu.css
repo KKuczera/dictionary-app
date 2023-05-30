@@ -1,12 +1,15 @@
-ul {
+ol {
     display: flex;
     justify-content: center;
-    align-items: center;
     float: left;
     width: 100%;
     padding: 0;
     margin: 0;
     list-style: none;
+}
+
+li {
+    padding: 2px 3px 2px 3px;
 }
     
 li a {
@@ -18,17 +21,17 @@ li a {
     width: 175px;
     height: 30px;
     text-decoration: none;
-    color: lightcoral;
-    background-color: palegreen;
+    color: #004369;
+    background-color: #E5DDC8;
     padding: 10px 15px;
     margin: 0px 1px 1px 0px;
-    border: 2px solid royalblue;
+    border: 2px solid #004369;
     border-radius: 5px;
     box-shadow: 3px 2px 3px gray;
 }
     
 li a:hover {
-    color: palegreen;
-    background: lightcoral;
-    border: 1px solid royalblue;
+    color: #E5DDC8;
+    background: #004369;
+    border: 1px solid #E5DDC8;
 }

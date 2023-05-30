@@ -38,10 +38,9 @@
 }
 
 body {
-  text-align: center;
-  align-items: center;
-  background-color: lightcoral;
-  color: palegreen;
-  width: 100%;
+  padding: 5px 20px 5px 20px;
+  background-color: #004369;
+  color: #E5DDC8;
+  width: 95%;
   height: 100%;
 }

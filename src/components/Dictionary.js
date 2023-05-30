@@ -40,7 +40,7 @@ function Dictionary() {
 
       <form onSubmit={handleSubmit}>
         <label>
-          Word:
+          Word: 
           <input type="text" value={word} onChange={handleWordChange} />
         </label>
         
